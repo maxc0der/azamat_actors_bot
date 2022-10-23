@@ -1,8 +1,12 @@
+"""
+Парсер kinoteatr. Итерируемся по буквам алфавита, потом по номерам страниц.
+Сохраняет в папку "actors_ru/"
+"""
+
 import requests
 from bs4 import BeautifulSoup
 import time
 import string
-#from dface import *
 from random import randint
 
 
@@ -18,7 +22,6 @@ def format_filename(s):
 
 domain = 'https://www.kino-teatr.ru/'
 letters = ['a', 'b', 'v', 'g', 'd', 'e', 'j', 'z', 'i', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'f', 'h', 'c', 'cz', 'sh', 'sch', 'ye', 'yu', 'ya']
-#letters = [ 'd', 'e', 'j', 'z', 'i', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'f', 'h', 'c', 'cz', 'sh', 'sch', 'ye', 'yu', 'ya']
 
 for letter in letters:
     letter_url = 'https://www.kino-teatr.ru/kino/acter/all/ros/' + letter + '/'
@@ -50,9 +53,3 @@ for letter in letters:
             out = open(path, "wb")
             out.write(loaded_image.content)
             time.sleep(0.15)
-"""
-#   faces = get_faces(path)
-#    if len(faces) > 0:
-#        print('Count: ', str(len(faces)))
-#       store_face(file_name=path, caption=quote['alt'])
-"""

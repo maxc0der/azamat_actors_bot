@@ -1,3 +1,8 @@
+"""
+Парсер ruskino. Итерируемся по буквам алфавита, потом по номерам страниц.
+Сохраняет в папку actors_ruskino_male/
+"""
+
 import requests
 from bs4 import BeautifulSoup
 import time
@@ -15,11 +20,11 @@ def format_filename(s):
 
 
 domain = 'https://ruskino.ru/'
-pages = range(108, 152)
+pages = range(1, 192)
 
 for page in pages:
     print('Page: ', str(page))
-    response = requests.get(domain + 'art/groups/actresses?page=' + str(page))
+    response = requests.get(domain + 'art/groups/actors?page=' + str(page))
     print(domain + 'art/groups/actresses?page=' + str(page))
     soup = BeautifulSoup(response.text, 'lxml')
     quotes = soup.find_all('div', class_='iso_item_list_portrait_full')
@@ -28,14 +33,7 @@ for page in pages:
         alt = quote.find('h4').text
         print(alt)
         loaded_image = requests.get(domain + src)
-        path = "actors_ruskino_female/" + format_filename(alt) + '.jpg'
+        path = "actors_ruskino_male/" + format_filename(alt) + '.jpg'
         out = open(path, "wb")
         out.write(loaded_image.content)
-        time.sleep(0.15)
-
-"""
-#   faces = get_faces(path)
-#    if len(faces) > 0:
-#        print('Count: ', str(len(faces)))
-#       store_face(file_name=path, caption=quote['alt'])
-"""
+        time.sleep(0.25)

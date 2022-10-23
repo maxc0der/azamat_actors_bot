@@ -1,3 +1,5 @@
+
+
 import pickle
 from alembic import op
 import sqlalchemy as sa
@@ -51,17 +53,20 @@ class Db:
             return [row for row in session.query(Face) if row.age != 0]
 
     @staticmethod
-    def get_contain_faces(str) -> list[Face]:
-        return [row for row in Session().query(Face) if str in row.file_name]
+    def get_contain_faces(str, str2) -> list[Face]:
+        """Получить лица, содержащие в пути к файлу подстроку str или str2"""
+        return [row for row in Session().query(Face) if str in row.file_name or str2 in row.file_name]
 
 
     @staticmethod
     def view_base():
+        """ Вывести в консоль базу данных """
         for face in Db.get_all_faces():
             print(str(face.id) + ' ' + face.caption + ' ' + face.file_name, face.group, face.age, face.gender)
 
     @staticmethod
     def update(file_name, age):
+        """ Установить значение возраста для элемента базы данных с соответствующим путем до изображения """
         session = Session()
         session.query(Face).filter(Face.file_name == file_name).update({'age': age})
         session.commit()
@@ -71,6 +76,6 @@ class Db:
 #with Session() as session:
 #    session.query(Face).filter(Face.id > 30).update({'file_name': 'actors/' + Face.caption + '.jpg'})
 #    session.commit()
-Db.view_base()
+#Db.view_base()
 
 

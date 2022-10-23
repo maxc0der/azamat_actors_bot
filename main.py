@@ -7,7 +7,9 @@ from models import Db, Face
 import urllib.parse
 
 
+# НЕ ИСПОЛЬЗУЕТСЯ
 def draw_rectangles(file_name, faces):
+    """ Нарисовать на изображении прямоугольники лиц"""
     img = cv2.imread(file_name)
     for face in faces:
         img = cv2.rectangle(img, face['p1'], face['p2'], face['color'], 3)
@@ -45,11 +47,12 @@ def repeat_all_messages(message):
 
         result = list()
         faces = get_faces(file_name)
-        #for i, item in enumerate(faces):
-        face = find_face(file_name=faces[0]['path'])
 
-#            result.append(str(i + 1) + ': ' + '💬 Лицо не знакомо')
- #           faces[i]['color'] = (0, 0, 255)
+        if len(faces) == 0:
+            bot.send_message(chat_id, '⏳ Лица на фото не найдены')
+            return False
+        else:
+            face = find_face(file_name=faces[0]['path'])
         if face is not None:
             first_face = face[0][0]
             second_face = face[1][0]
@@ -63,11 +66,6 @@ def repeat_all_messages(message):
             else:
                 bot.send_message(chat_id, '⏳ Фото загружено, распознаём...')
 
-
-                #        result.append(str(i + 1) + ': ✅ ' + face.caption)
-                #        faces[i]['color'] = (0, 255, 0)
-                #draw_rectangles(file_name, faces)
-                #bot.send_photo(chat_id, open(file_name, 'rb'), caption='\n'.join(result))
                 caption = '✅ ' + first_face.caption
                 caption = caption + '\n\nДругие варианты:\n'
                 caption = caption + '- ' + second_face.caption + '\n'
@@ -85,7 +83,6 @@ def repeat_all_messages(message):
                 bot.send_photo(chat_id, open(first_face.file_name, 'rb'), caption=caption, reply_markup=keyboard)
         else:
             bot.send_message(chat_id, '⚠️ На фото не обнаружены лица')
-    #bot.send_message(chat_id, message.text)
 
 
 bot.infinity_polling()
