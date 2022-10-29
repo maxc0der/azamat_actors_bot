@@ -12,4 +12,6 @@ face_path = faces[0]['path']
 print(face_path)
 print('Exists: ', str(os.path.exists(face_path)))
 face = find_face(file_name=face_path)
-print(face[0][0].file_name)
+
+print('Путь к файлу: ', face[0][0].file_name)
+print('Имя актёра: ', face[0][0].caption)
