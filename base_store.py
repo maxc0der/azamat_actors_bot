@@ -23,11 +23,6 @@ print(str(len(image_files)))
 
 i = 0
 for img in image_files:
-# Рамиль Азимов
-#    if img < 'actors/Хорхе Лендеборгмл.jpg':
-    if i < 2534:
-        i = i + 1
-        continue
     start_time = time.time()
     i = i + 1
     print(str(i) + ' / ' + str(len(image_files)))
